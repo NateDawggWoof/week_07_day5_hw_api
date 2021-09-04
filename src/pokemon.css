@@ -1,0 +1,48 @@
+.pokemonSelectionList{
+    width: 12em;
+    height: 20em;
+    line-height: 2em;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  
+  .pokemonPriviewPic{
+    width:150px; 
+    height: auto;
+  }
+
+  .pokemonDisplayPic{
+    width:50px; /* you can use % */
+    height: auto;
+  }
+  
+.pokemonSelect{
+    margin: 20px;
+    border: 5px solid black;
+    width: 500px;
+}
+
+.pokemonCapture{
+    margin: 20px;
+    border: 5px solid black;
+    width: 500px;
+}
+
+.pokemonPriview{
+    margin: 20px;
+    border: 5px solid black;
+    width: 500px;
+}
+
+.pokemonDetails{
+    margin: 20px;
+    border: 5px solid black;
+    width: 500px;
+}
+  
+  
+  
+  
