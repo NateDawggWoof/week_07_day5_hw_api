@@ -1,3 +1,11 @@
+.pokedex {
+    display: flex;
+    
+}
+
+
+
+
 .pokemonSelectionList{
     width: 12em;
     height: 20em;

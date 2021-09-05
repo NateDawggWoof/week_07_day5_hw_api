@@ -12,18 +12,19 @@ const Pokedex = ({pokemons}) =>{
     const[pokedexScreen1, setPokedexScreen1] = useState("select");
     const[pokedexScreen2, setPokedexScreen2] = useState("preview");
 
+    // GET POKEMON OBJECT
     const getPokemon = function(pokemonName){
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
         .then(res => res.json())
         .then(selectedPokemon => SetSelectedPokemon(selectedPokemon));
       }
 
+    //   SET POKEMON DETAILS TO SLECTED POKEMON
       const getPokemonDetails = function(){
           SetPokemonDetails(selectedPokemon);
       }
 
-    // console.log('pokedex pokemons', pokemons)
-
+    // HANDLE SCREEN1 TOGGLE
     const handleScreen1Change = function(){
         if (pokedexScreen1 == "select"){
             setPokedexScreen1("caught")
@@ -32,25 +33,38 @@ const Pokedex = ({pokemons}) =>{
         }
     }
 
+    //HANDLE SCREEN2 TOGGLE 2XFUNCTIONS
+    const handleScreen2ChangeClick = function(){
+            setPokedexScreen2("details")
+        }
+
+    const handleScreen2ChangeHover = function(){
+            setPokedexScreen2("preview")
+        }
+    
 
 
+    //GETS IMAGE FOR PREVIEW
     const handleDisplayPreview = (pokemonName) => {
         console.log("pokemon Name", pokemonName)
         getPokemon(pokemonName);
+        handleScreen2ChangeHover()
         console.log("This is the pokemon preivew", selectedPokemon)
       }
 
+    // GETS POKEMON DETAILS
     const handleDisplayDetails = () => {
         console.log("Display Details click has worked")
         getPokemonDetails();
+        handleScreen2ChangeClick()
       }
 
+
+    // CAPTURES/RELEASES POKEMON
     const handleCaptureReleasePokemon = ((pokemon) => {
         const caught = handleCaptureButtonToggle(pokemon)
-
         if (caught ==true ){
             return "pass"
-
         } else {
             const updateCaught = [...pokemonCaught, pokemon ]
         SetPokemonCaught(updateCaught);
@@ -59,6 +73,7 @@ const Pokedex = ({pokemons}) =>{
     })
 
 
+    //   BUTTON CAPTURE/RELEASE TOGGLES BUTTON TEXT
       const handleCaptureButtonToggle = ((pokemonSelected) => {
         const capturedPokemon = pokemonCaught.some((pokemon) => {
             return pokemon.name === pokemonSelected.name
@@ -66,27 +81,32 @@ const Pokedex = ({pokemons}) =>{
         if (capturedPokemon == true) {return "Realease"} else {return "Capture"}
     })
 
+
+    //  WHAT DISPLAYS ON SCREEN 1
     const screen1 = (pokemons) => {if (pokedexScreen1 == "select"){
-        return <PokemonSelect pokemons={pokemons} handleDisplayPreview={handleDisplayPreview} handleDisplayDetails={handleDisplayDetails}/> 
+        return <PokemonSelect pokemons={pokemons} handleDisplayPreview={handleDisplayPreview} handleDisplayDetails={handleDisplayDetails} handleScreen2ChangeClick ={handleScreen2ChangeClick} handleScreen2ChangeHover={handleScreen2ChangeHover} /> 
     } else {
         return <PokemonCapture pokemonCaught={pokemonCaught}/>
     }}
 
-    const screen2 = (pokemons) => {if (pokedexScreen2 == "preview"){
-        return <PokemonSelect pokemons={pokemons} handleDisplayPreview={handleDisplayPreview} handleDisplayDetails={handleDisplayDetails}/> 
-    } else {
-        return <PokemonCapture pokemonCaught={pokemonCaught}/>
+    //  WHAT DISPLAYS ON SCREEN 2
+    const screen2 = () => {if (selectedPokemon == null){
+        return 
+
+    }else if(pokedexScreen2 == "preview"){
+        return <PokemonPreview  selectedPokemon={selectedPokemon}/>
+    }else{
+        return  pokemonDetails ?<PokemonDetails  pokemonDetails={pokemonDetails} handleCaptureButtonToggle={handleCaptureButtonToggle} handleCaptureReleasePokemon={handleCaptureReleasePokemon}/> : null
     }}
         
     return(
-        <>
+        <div className='pokedex'>
         <h1>I'm the Pokedex</h1>
-       
-        {screen1(pokemons)}
-        {selectedPokemon ?<PokemonPreview  selectedPokemon={selectedPokemon}/>  : null}
-        {pokemonDetails ?<PokemonDetails  pokemonDetails={pokemonDetails} handleCaptureButtonToggle={handleCaptureButtonToggle} handleCaptureReleasePokemon={handleCaptureReleasePokemon}/> : null}
+        {screen1(pokemons)}  
+        {screen2()}
+
         <PokedexButtons handleScreen1Change={handleScreen1Change}/>
-        </>
+        </div>
 
     )
 }
