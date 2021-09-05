@@ -61,12 +61,15 @@ const Pokedex = ({pokemons}) =>{
 
 
     // CAPTURES/RELEASES POKEMON
-    const handleCaptureReleasePokemon = ((pokemon) => {
-        const caught = handleCaptureButtonToggle(pokemon)
-        if (caught ==true ){
-            return "pass"
+    const handleCaptureReleasePokemon = ((caughtPokemon) => {
+        const caught = handleCaptureButtonToggle(caughtPokemon)
+        console.log(caught)
+        if (caught =="Realease"){
+            const removePokemon = pokemonCaught.filter((pokemon => {
+                return pokemon.name !== caughtPokemon.name;}))
+                SetPokemonCaught(removePokemon)
         } else {
-            const updateCaught = [...pokemonCaught, pokemon ]
+            const updateCaught = [...pokemonCaught, caughtPokemon ]
         SetPokemonCaught(updateCaught);
 
         }
@@ -86,12 +89,12 @@ const Pokedex = ({pokemons}) =>{
     const screen1 = (pokemons) => {if (pokedexScreen1 == "select"){
         return <PokemonSelect pokemons={pokemons} handleDisplayPreview={handleDisplayPreview} handleDisplayDetails={handleDisplayDetails} handleScreen2ChangeClick ={handleScreen2ChangeClick} handleScreen2ChangeHover={handleScreen2ChangeHover} /> 
     } else {
-        return <PokemonCapture pokemonCaught={pokemonCaught}/>
+        return <PokemonCapture pokemonCaught={pokemonCaught} handleDisplayPreview={handleDisplayPreview} handleDisplayDetails={handleDisplayDetails}/>
     }}
 
     //  WHAT DISPLAYS ON SCREEN 2
     const screen2 = () => {if (selectedPokemon == null){
-        return 
+        return <div className="blankScreen"></div>
 
     }else if(pokedexScreen2 == "preview"){
         return <PokemonPreview  selectedPokemon={selectedPokemon}/>
@@ -101,9 +104,13 @@ const Pokedex = ({pokemons}) =>{
         
     return(
         <div className='pokedex'>
+        <canvas id="myCanvas" height="200"></canvas>
+        <script src="./PokedexCanvas"></script>
         <h1>I'm the Pokedex</h1>
+        <div className='screens'>
         {screen1(pokemons)}  
         {screen2()}
+        </div>
 
         <PokedexButtons handleScreen1Change={handleScreen1Change}/>
         </div>

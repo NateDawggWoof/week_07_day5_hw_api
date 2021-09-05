@@ -13,7 +13,7 @@ const pokemonSelection = pokemons.map((pokemon,index) =>{
 
     return(
         <div className='pokemonSelect'>
-        <h2>I'm Pokemon Selection</h2>
+        <h3>Pokemon Libriary</h3>
         <ul className='pokemonSelectionList'>
         {pokemonSelection}
         </ul>

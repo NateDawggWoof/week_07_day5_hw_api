@@ -1,11 +1,11 @@
 import React from 'react'
 
-const PokemonCapture= ({pokemonCaught}) =>{
+const PokemonCapture= ({pokemonCaught, handleDisplayPreview, handleDisplayDetails}) =>{
 
 
     const capturedPokemon = pokemonCaught.map((pokemon,index) =>{
     
-        return <li  key={index}>{pokemon.name}</li>})
+        return <li  key={index} onClick={handleDisplayDetails} onMouseEnter={() => handleDisplayPreview(pokemon.name)}>{pokemon.name}</li>})
 
 
 

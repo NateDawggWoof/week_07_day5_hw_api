@@ -12,7 +12,7 @@ const PokemonPreview = ({selectedPokemon}) =>{
 
     return(
         <div className='pokemonPriview'>
-        <h2>I'm the Pokemon Preview</h2>
+        <h2>Pokemon Preview</h2>
         <img className='pokemonPriviewPic' src={pokemonImageUrl} />
         </div>
     )

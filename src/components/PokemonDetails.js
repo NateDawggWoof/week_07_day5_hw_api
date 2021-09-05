@@ -1,14 +1,23 @@
 import React from 'react'
+import Chart from "react-google-charts";
 
 const PokemonDetails= ({pokemonDetails, handleCaptureButtonToggle, handleCaptureReleasePokemon }) =>{
     const pokemonImageUrl = pokemonDetails.sprites.front_default
     const pokemonAllStats = pokemonDetails.stats
     const pokemonAllTypes = pokemonDetails.types
-    console.log(pokemonDetails.held_items.id)
+    const stats = [['Stat', 'Value']]
+
+
+  
+    
 
 
     const pokemonStats= pokemonAllStats.map((statType,index) =>{
-    
+        const stat =[] 
+        stat.push(statType.stat.name)
+        stat.push(statType.base_stat)
+        stats.push(stat) 
+        console.log(stats)    
         return <li  key={index} >{statType.stat.name}: {statType.base_stat}</li>
     })
 
@@ -24,20 +33,32 @@ const PokemonDetails= ({pokemonDetails, handleCaptureButtonToggle, handleCapture
 
     return(
         <div className='pokemonDetails'>
-        <h2>I'm the Pokemon Details</h2>
-        <img className='pokemonDisplayPic' src={pokemonImageUrl} />
-        <h3>Name: {pokemonDetails.name} Pokedex I.D: {pokemonDetails.id}</h3>
-        <p>Height:  {pokemonDetails.height/10}m </p>
-        <p>Weight: {pokemonDetails.weight/10}Kg </p>
+        <img id='one' className='pokemonDisplayPic' src={pokemonImageUrl} />
+        <p id='two'>Name: {pokemonDetails.name}</p>
+        <p id='three'>Pokedex I.D: {pokemonDetails.id}</p>
+        <p id='four'>Height:  {pokemonDetails.height/10}m </p>
+        <p id='five'>Weight: {pokemonDetails.weight/10}Kg </p>
 
-        <ul>
+        <ul id='seven'>
             {pokemonStats}
         </ul>
-        <ul>
+        <ul id='six'>
             {pokemonTypes}
         </ul>
-        <button onClick={() => {handleCaptureReleasePokemon(pokemonDetails)}}>{buttonText}</button>
+        <Chart id='eight'
+  width={'300px'}
+  height={'200px'}
+  chartType="PieChart"
+  loader={<div>Loading Chart</div>}
+  data={stats}
+  options={{
+    title: 'Stats Proportion',
+  }}
+  rootProps={{ 'data-testid': '1' }}
+/>
+        <button id='nine' onClick={() => {handleCaptureReleasePokemon(pokemonDetails)}}>{buttonText}</button>
         </div>
+
     )
 }
 
